@@ -2,6 +2,7 @@ package com.seven.nungil.service;
 
 import com.seven.nungil.domain.RecommendedPlace;
 import com.seven.nungil.domain.User;
+import com.seven.nungil.dto.PlaceCancelRequestDTO;
 import com.seven.nungil.dto.PlaceRegisterResponse;
 import com.seven.nungil.dto.PlaceRequestDTO;
 import com.seven.nungil.repository.RecommendedPlaceRepository;
@@ -24,13 +25,13 @@ public class PlaceService {
     /**
      * 추천 장소를 생성하는 메서드이다.
      *
-     * @param PlaceRequestDTO 추천 장소 생성 시 요구되는 정보
+     * @param placeRequestDTO 추천 장소 생성 시 요구되는 정보
      * @return place Id
      */
     @Transactional
     public PlaceRegisterResponse placeRegister(PlaceRequestDTO placeRequestDTO){
         User user = userRepository.findById(placeRequestDTO.getUserId())
-                .orElseThrow(()->new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
         user.plusPlaceCount();
         Random random = new Random();
         String answer = new String(placeRequestDTO.getQuizAnswer());
@@ -59,11 +60,31 @@ public class PlaceService {
                 .quiz(placeRequestDTO.getQuiz())
                 .quizAnswer(placeRequestDTO.getQuizAnswer())
                 .quizHint(hint)
+                .placePasswd(placeRequestDTO.getPlacePasswd())
                 .build();
 
         RecommendedPlace newPlace = placeRepository.save(place);
 
         return new PlaceRegisterResponse(newPlace.getPlaceId());
 
+    }
+
+    /**
+     * 추천 장소를 취소하는 메서드이다.
+     *
+     * @param placeCancelRequestDTO 추천 장소 취소 시 요구되는 정보
+     */
+    @Transactional
+    public void cancelRecommendedPlace(PlaceCancelRequestDTO placeCancelRequestDTO) {
+        User user = userRepository.findById(placeCancelRequestDTO.getUserId())
+                .orElseThrow(IllegalArgumentException::new);
+        RecommendedPlace recommendedPlace = placeRepository.findById(placeCancelRequestDTO.getPlaceId())
+            .orElseThrow(IllegalArgumentException::new);
+
+        if (!recommendedPlace.getPlacePasswd().equals(placeCancelRequestDTO.getPlacePasswd())) {
+            throw new IllegalArgumentException();
+        }
+        user.minusPlaceCount();
+        placeRepository.delete(recommendedPlace);
     }
 }

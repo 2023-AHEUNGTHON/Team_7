@@ -1,6 +1,5 @@
 package com.seven.nungil.dto;
 
-import com.seven.nungil.domain.User;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +30,8 @@ public class PlaceRequestDTO {
 
     @ApiModelProperty(value = "퀴즈 정답", example = "22.03.21")
     private String quizAnswer;
+    @ApiModelProperty(value = "퀴즈 비밀번호", example = "000000")
+    private String placePasswd;
 
 }
 

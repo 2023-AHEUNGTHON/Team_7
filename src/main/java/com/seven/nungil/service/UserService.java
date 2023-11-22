@@ -50,7 +50,7 @@ public class UserService {
      */
     public Integer getPlaceCount(Long userId){
         User user = userRepository.findById(userId)
-                .orElseThrow(()->new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
         return user.getPlaceCount();
     }
 
@@ -62,7 +62,7 @@ public class UserService {
      */
     public QuizResponse getQuiz(Long placeId){
         RecommendedPlace place = placeRepository.findById(placeId)
-                .orElseThrow(()->new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
         return new QuizResponse(place.getQuiz(),place.getQuizAnswer(),place.getQuizAnswer().length(),place.getQuizHint());
     }
     /**
@@ -73,7 +73,7 @@ public class UserService {
      */
     public List<PlaceResponse> getPlaces(Long userId){
         User user = userRepository.findById(userId)
-                .orElseThrow(()->new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
         List<RecommendedPlace> placeList= placeRepository.findRecommendedPlacesByUser(user);
 
         return placeList.stream()
@@ -94,7 +94,7 @@ public class UserService {
      */
     public PlaceResponse getPlace(Long placeId){
         RecommendedPlace place = placeRepository.findById(placeId)
-                .orElseThrow(()->new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
         return new PlaceResponse(place.getPlaceId(),place.getLatitude(),place.getLongitude(), place.getPlaceName(), place.getPlaceProvider());
     }
 }

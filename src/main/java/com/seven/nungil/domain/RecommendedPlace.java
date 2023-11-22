@@ -35,19 +35,21 @@ public class RecommendedPlace {
 
     private String quizAnswer;
 
-//    private String placePasswd;
+	private String placePasswd;
 
-    @Builder
-    public RecommendedPlace(User user, Float latitude, Float longitude, String placeName, String placeProvider, String placeDescription, String quiz, String quizHint, String quizAnswer){
-        this.user = user;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.placeName = placeName;
-        this.placeProvider = placeProvider;
-        this.placeDescription = placeDescription;
-        this.quiz = quiz;
-        this.quizHint = quizHint;
-        this.quizAnswer=quizAnswer;
-    }
+	@Builder
+	public RecommendedPlace(User user, Float latitude, Float longitude, String placeName, String placeProvider,
+		String placeDescription, String quiz, String quizHint, String quizAnswer, String placePasswd) {
+		this.user = user;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.placeName = placeName;
+		this.placeProvider = placeProvider;
+		this.placeDescription = placeDescription;
+		this.quiz = quiz;
+		this.quizHint = quizHint;
+		this.quizAnswer = quizAnswer;
+		this.placePasswd = placePasswd;
+	}
 
 }

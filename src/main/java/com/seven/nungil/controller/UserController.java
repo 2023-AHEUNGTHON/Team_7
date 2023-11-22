@@ -1,6 +1,5 @@
 package com.seven.nungil.controller;
 
-import com.seven.nungil.domain.RecommendedPlace;
 import com.seven.nungil.dto.PlaceResponse;
 import com.seven.nungil.dto.QuizResponse;
 import com.seven.nungil.dto.UserRegisterResponse;

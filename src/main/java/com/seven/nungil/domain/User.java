@@ -33,6 +33,10 @@ public class User {
     public void plusPlaceCount() {
         this.placeCount = placeCount + 1;
     }
+
+    public void minusPlaceCount() {
+        this.placeCount = placeCount - 1;
+    }
     @Builder
     public User(String userName, String placeTheme, Float latitude, Float longitude, Integer placeCount, List<RecommendedPlace> placeList){
         this.userName = userName;

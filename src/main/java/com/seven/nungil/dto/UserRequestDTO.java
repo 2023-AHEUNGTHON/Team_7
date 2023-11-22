@@ -12,7 +12,7 @@ public class UserRequestDTO {
     private String userName;
 
     @ApiModelProperty(value = "추천 받는 장소 테마", example = "분위기 좋은 카페")
-    private  String placeTheme;
+    private String placeTheme;
 
     @ApiModelProperty(value = "사용자 현재 위도", example = "37.4990004")
     private Float latitude;
