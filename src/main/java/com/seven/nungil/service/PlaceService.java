@@ -90,15 +90,13 @@ public class PlaceService {
 	 */
 	@Transactional
 	public void cancelRecommendedPlace(PlaceCancelRequestDTO placeCancelRequestDTO) {
-		User user = userRepository.findById(placeCancelRequestDTO.getUserId())
-			.orElseThrow(() -> new NotFoundException("User Not Found " + placeCancelRequestDTO.getUserId()));
 		RecommendedPlace recommendedPlace = placeRepository.findById(placeCancelRequestDTO.getPlaceId())
 			.orElseThrow(() -> new NotFoundException("Place Not Found " + placeCancelRequestDTO.getPlaceId()));
 
 		if (!recommendedPlace.getPlacePasswd().equals(placeCancelRequestDTO.getPlacePasswd())) {
 			throw new UnauthorizedException("Place Password Not Matched");
 		}
-		user.minusPlaceCount();
+		recommendedPlace.getUser().minusPlaceCount();
 		placeRepository.delete(recommendedPlace);
 	}
 }

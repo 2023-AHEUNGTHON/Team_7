@@ -11,10 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PlaceCancelRequestDTO {
-	@ApiModelProperty(value = "userId", example = "1")
-	@NotNull
-	private Long userId;
-
 	@ApiModelProperty(value = "placeId", example = "1")
 	@NotNull
 	private Long placeId;
