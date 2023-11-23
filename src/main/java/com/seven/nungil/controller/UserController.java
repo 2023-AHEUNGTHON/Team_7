@@ -29,7 +29,7 @@ public class UserController {
             @ApiResponse(code = 400, message = "입력 정보 오류")
     })
     public ResponseEntity<UserRegisterResponse> registerUser(@RequestBody @Validated UserRequestDTO userRequestDTO) {
-        UserRegisterResponse response = userService.userRegister(userRequestDTO);
+        UserRegisterResponse response = userService.registerUser(userRequestDTO);
         return ResponseEntity.ok(response);
     }
 

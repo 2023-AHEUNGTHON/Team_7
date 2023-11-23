@@ -30,7 +30,7 @@ public class UserService {
      * @return user Id
      */
     @Transactional
-    public UserRegisterResponse userRegister(UserRequestDTO userRequestDTO){
+    public UserRegisterResponse registerUser(UserRequestDTO userRequestDTO){
         User user = User.builder()
                 .userName(userRequestDTO.getUserName())
                 .placeTheme(userRequestDTO.getPlaceTheme())

@@ -31,7 +31,7 @@ public class PlaceController {
             @ApiResponse(code = 400, message = "입력 정보 오류")
     })
     public ResponseEntity<PlaceRegisterResponse> registerPlace(@RequestBody @Validated PlaceRequestDTO placeRequestDTO) {
-        PlaceRegisterResponse response = placeService.placeRegister(placeRequestDTO);
+        PlaceRegisterResponse response = placeService.registerPlace(placeRequestDTO);
         return ResponseEntity.ok(response);
     }
 
