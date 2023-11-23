@@ -21,6 +21,7 @@ import java.util.Set;
 public class PlaceService {
     private final RecommendedPlaceRepository placeRepository;
     private final UserRepository userRepository;
+    private final Random random = new Random();
 
     /**
      * 추천 장소를 생성하는 메서드이다.
@@ -33,22 +34,8 @@ public class PlaceService {
         User user = userRepository.findById(placeRequestDTO.getUserId())
                 .orElseThrow(IllegalArgumentException::new);
         user.plusPlaceCount();
-        Random random = new Random();
-        String answer = new String(placeRequestDTO.getQuizAnswer());
-        int length = answer.length();
-        int halfLength =  length/2;
 
-        Set<Integer> randomPositions = new HashSet<>();
-        while (randomPositions.size() < halfLength) {
-            int randomPosition = random.nextInt(length);
-            randomPositions.add(randomPosition);
-        }
-        StringBuilder replacedStr = new StringBuilder(answer);
-
-        for (int position : randomPositions) {
-            replacedStr.setCharAt(position, '_');
-        }
-        String hint = replacedStr.toString();
+        String hint = getHint(placeRequestDTO);
 
         RecommendedPlace place = RecommendedPlace.builder()
                 .user(user)
@@ -67,6 +54,25 @@ public class PlaceService {
 
         return new PlaceRegisterResponse(newPlace.getPlaceId());
 
+    }
+
+    private String getHint(PlaceRequestDTO placeRequestDTO) {
+        String answer =  placeRequestDTO.getQuizAnswer();
+        int length = answer.length();
+        int halfLength =  length/2;
+
+        Set<Integer> randomPositions = new HashSet<>();
+        while (randomPositions.size() < halfLength) {
+            int randomPosition = random.nextInt(length);
+            randomPositions.add(randomPosition);
+        }
+        StringBuilder replacedStr = new StringBuilder(answer);
+
+        for (int position : randomPositions) {
+            replacedStr.setCharAt(position, '_');
+        }
+        String hint = replacedStr.toString();
+        return hint;
     }
 
     /**
