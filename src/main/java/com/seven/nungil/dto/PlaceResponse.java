@@ -23,8 +23,10 @@ public class PlaceResponse {
 
     @ApiModelProperty(value = "장소 제공자", example = "유승한")
     private String placeProvider;
+    @ApiModelProperty(value = "퀴즈 여부", example = "true")
+    private Boolean isQuiz;
 
-    public static PlaceResponse of (Long placeId, Float latitude, Float longitude, String placeName, String placeProvider) {
-        return new PlaceResponse(placeId, latitude,longitude, placeName, placeProvider);
+    public static PlaceResponse of (Long placeId, Float latitude, Float longitude, String placeName, String placeProvider, Boolean isQuiz) {
+        return new PlaceResponse(placeId, latitude,longitude, placeName, placeProvider, isQuiz);
     }
 }
