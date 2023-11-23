@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class UserController {
             @ApiResponse(code = 200, message = "사용자 등록 성공"),
             @ApiResponse(code = 400, message = "입력 정보 오류")
     })
-    public ResponseEntity<UserRegisterResponse> registerUser(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserRegisterResponse> registerUser(@RequestBody @Validated UserRequestDTO userRequestDTO) {
         UserRegisterResponse response = userService.userRegister(userRequestDTO);
         return ResponseEntity.ok(response);
     }

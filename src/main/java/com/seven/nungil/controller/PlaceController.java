@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class PlaceController {
             @ApiResponse(code = 200, message = "위치 등록 성공"),
             @ApiResponse(code = 400, message = "입력 정보 오류")
     })
-    public ResponseEntity<PlaceRegisterResponse> registerPlace(@RequestBody PlaceRequestDTO placeRequestDTO) {
+    public ResponseEntity<PlaceRegisterResponse> registerPlace(@RequestBody @Validated PlaceRequestDTO placeRequestDTO) {
         PlaceRegisterResponse response = placeService.placeRegister(placeRequestDTO);
         return ResponseEntity.ok(response);
     }
@@ -40,7 +41,7 @@ public class PlaceController {
         @ApiResponse(code = 200, message = "추천 위치 삭제 성공"),
         @ApiResponse(code = 400, message = "추천 위치 삭제 실패")
     })
-    public ResponseEntity<Void> cancelRecommendedPlace(@RequestBody PlaceCancelRequestDTO placeCancelRequestDTO) {
+    public ResponseEntity<Void> cancelRecommendedPlace(@RequestBody @Validated PlaceCancelRequestDTO placeCancelRequestDTO) {
         placeService.cancelRecommendedPlace(placeCancelRequestDTO);
         return ResponseEntity.ok().build();
     }
