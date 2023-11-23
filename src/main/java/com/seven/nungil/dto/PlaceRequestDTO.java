@@ -36,7 +36,7 @@ public class PlaceRequestDTO {
 
 	@ApiModelProperty(value = "메시지", example = "너랑 내가 처음 만났던 곳이야")
 	@NotEmpty
-	@Size(min = 1, max = 1000)
+	@Size(min = 1, max = 200)
 	private String placeDescription;
 
 	@ApiModelProperty(value = "퀴즈", example = "너랑 사귄 날")
