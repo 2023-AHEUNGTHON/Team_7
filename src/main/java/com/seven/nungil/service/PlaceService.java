@@ -5,6 +5,8 @@ import com.seven.nungil.domain.User;
 import com.seven.nungil.dto.PlaceCancelRequestDTO;
 import com.seven.nungil.dto.PlaceRegisterResponse;
 import com.seven.nungil.dto.PlaceRequestDTO;
+import com.seven.nungil.exception.notfound.NotFoundException;
+import com.seven.nungil.exception.unauthorized.UnauthorizedException;
 import com.seven.nungil.repository.RecommendedPlaceRepository;
 import com.seven.nungil.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,7 @@ public class PlaceService {
     @Transactional
     public PlaceRegisterResponse placeRegister(PlaceRequestDTO placeRequestDTO){
         User user = userRepository.findById(placeRequestDTO.getUserId())
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()-> new NotFoundException("User Not Found " + placeRequestDTO.getUserId()));
         user.plusPlaceCount();
 
         String hint = getHint(placeRequestDTO);
@@ -83,12 +85,12 @@ public class PlaceService {
     @Transactional
     public void cancelRecommendedPlace(PlaceCancelRequestDTO placeCancelRequestDTO) {
         User user = userRepository.findById(placeCancelRequestDTO.getUserId())
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(()-> new NotFoundException("User Not Found " + placeCancelRequestDTO.getUserId()));
         RecommendedPlace recommendedPlace = placeRepository.findById(placeCancelRequestDTO.getPlaceId())
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(()-> new NotFoundException("Place Not Found " + placeCancelRequestDTO.getPlaceId()));
 
         if (!recommendedPlace.getPlacePasswd().equals(placeCancelRequestDTO.getPlacePasswd())) {
-            throw new IllegalArgumentException();
+            throw new UnauthorizedException("Place Password Not Matched");
         }
         user.minusPlaceCount();
         placeRepository.delete(recommendedPlace);
